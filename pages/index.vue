@@ -1,80 +1,51 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        nuxt-auth-demo
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+  <div>
+    <form method="post" @submit="submitLogin">
+      <input v-model="username" type="text">
+      <input v-model="password" type="password">
+      <input type="submit">
+    </form>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
 
-export default Vue.extend({})
+import { Component, Vue } from 'nuxt-property-decorator'
+
+@Component({})
+export default class indexPage extends Vue {
+  private username: String='';
+  private password: String='';
+
+  protected async submitLogin () {
+    if (this.username.length < 4 || this.password.length < 4) {
+      // add additional checks here
+      alert('please enter a valid username/password')
+    } else {
+      // loginWith the strategy you setup under auth.strategies[key]
+      // show your loading screen
+      try {
+        // show the loading icon
+        const response = await this.$auth.loginWith('refresh', {
+          data: {
+            username: this.username,
+            password: this.password
+          }
+        }).then(data => data).catch(error => error)
+
+        if (response.status == 200) {
+          // show the avatar
+
+        } else {
+          // hide the loading icon
+        }
+
+        console.log(response)
+      } catch (e) {
+        console.log('We have the following error')
+        console.log(e)
+      }
+    }
+  }
+}
 </script>
-
-<style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-@apply min-h-screen flex justify-center items-center text-center mx-auto;
-}
-*/
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
-</style>

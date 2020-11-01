@@ -14,8 +14,14 @@
   "dependencies": {
     "@nuxt/content": "^1.5.0",
     "@nuxt/typescript-runtime": "^1.0.0",
+    "@nuxtjs/auth": "bramburn/auth-module#dev",
     "@nuxtjs/axios": "^5.12.0",
-    "nuxt": "^2.14.0"
+    "nuxt": "^2.14.0",
+    "nuxt-property-decorator": "^2.7.2",
+    "postcss-nesting": "^7.0.1",
+    "postcss-sass": "^0.4.4",
+    "postcss-scss": "^2.0.0",
+    "sass-loader": "^8.0.2"
   },
   "devDependencies": {
     "@nuxt/types": "^2.14.0",
